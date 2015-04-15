@@ -2,11 +2,12 @@ $(function() {
     $("#chatContainer").hide();
 });
 
-var myWebSocket;
+var stompClient;
+var topicName = '/topic/oenbChat';
 
 function sendMessage(event, $usernameField, $messageField) {
     if (event.keyCode == 13 && $(messageField).val().length > 0) {
-        myWebSocket.send("[" + $usernameField.val() + "]: " + $messageField.val());
+        stompClient.send(topicName,{},"[" + $usernameField.val() + "]: " + $messageField.val());
         $messageField.val('');
     }
 }
@@ -16,13 +17,21 @@ function connect($usernameField, $chatField) {
     $("#initContainer").hide();
     $("#chatContainer").show();
 
-    myWebSocket = new WebSocket("ws://localhost:8080/websocket");
-    myWebSocket.onmessage = function(evt) {
-        console.log(evt);
-        $chatField.val($chatField.val() + evt.data + "\n");
-    };
+    var myWebSocket = new WebSocket("ws://localhost:8080/stomp");
+    stompClient = Stomp.over(myWebSocket);
 
-    myWebSocket.onopen = function(evt) {
-        myWebSocket.send($usernameField.val() + " hat den Raum betreten.");
-    };
+    stompClient.connect({debug:true}, function(frame) {
+        stompClient.subscribe(topicName, function(message) {
+            $chatField.val($chatField.val() + message.body + "\n");
+        });
+
+        stompClient.send(topicName,{},$usernameField.val() + " hat den Raum betreten.");
+    });
+}
+
+function disconnect($usernameField) {
+    if (stompClient) {
+        stompClient.send(topicName,{},$usernameField.val() + " hat den Raum verlassen.");
+        stompClient.disconnect();
+    }
 }
