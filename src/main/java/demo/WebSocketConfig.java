@@ -13,12 +13,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(myHandler(), "/websocket");
-    }
-
-    @Bean
-    public WebSocketHandler myHandler() {
-        return new MyHandler();
+        registry.addHandler(new MyHandler(), "/websocket");
     }
 
 }

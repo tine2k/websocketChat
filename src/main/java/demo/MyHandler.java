@@ -18,7 +18,10 @@ public class MyHandler implements WebSocketHandler {
 
     @Override
     public void handleMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage) throws Exception {
+
         System.out.println(webSocketMessage.getPayload());
+
+        // Nachricht auch an alle anderen schicken
         webSocketSession.sendMessage(webSocketMessage);
 
 //        Timer timer = new Timer();
