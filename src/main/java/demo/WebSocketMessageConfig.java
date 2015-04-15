@@ -24,4 +24,6 @@ public class WebSocketMessageConfig extends AbstractWebSocketMessageBrokerConfig
         registry.addEndpoint("/stomp");
     }
 
+
+
 }

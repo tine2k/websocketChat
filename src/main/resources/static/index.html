@@ -24,7 +24,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-10 col-sm-offset-2">
-                <input class="btn btn-primary" id="connectButton" type="submit" value="Jetzt Teilnehmen!" onclick="connect($('#usernameField'), $('#chatField'))">
+                <input class="btn btn-primary" id="connectButton" type="submit" value="Jetzt Teilnehmen!" onclick="connect($('#usernameField'), $('#chatField'), $('#userField'))">
             </div>
         </div>
     </div>
@@ -34,8 +34,11 @@
     <h1>Chat</h1>
     <div class="well well-lg">
         <div class="form-group">
-            <div class="col-sm-11 col-sm-offset-1">
+            <div class="col-sm-8 col-sm-offset-1">
                 <textarea class="form-control" id="chatField" readonly="true" rows="10"></textarea>
+            </div>
+            <div class="col-sm-3">
+                <textarea class="form-control" id="userField" readonly="true" rows="10"></textarea>
             </div>
         </div>
         <div class="form-group">
