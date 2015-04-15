@@ -1,5 +1,6 @@
 $(function() {
     $("#chatContainer").hide();
+    $('#connectButton')
 });
 
 var myWebSocket;
@@ -18,7 +19,6 @@ function connect($usernameField, $chatField) {
 
     myWebSocket = new WebSocket("ws://localhost:8080/websocket");
     myWebSocket.onmessage = function(evt) {
-        console.log(evt);
         $chatField.val($chatField.val() + evt.data + "\n");
     };
 
