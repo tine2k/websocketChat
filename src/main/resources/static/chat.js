@@ -17,8 +17,10 @@ function connect($usernameField, $chatField) {
     $("#chatContainer").show();
 
     myWebSocket = new WebSocket("ws://localhost:8080/websocket");
+    
     myWebSocket.onmessage = function(evt) {
         $chatField.val($chatField.val() + evt.data + "\n");
+        $chatField.animate({ scrollTop: $(document).height() }, "slow");
     };
 
     myWebSocket.onopen = function(evt) {
