@@ -32,7 +32,7 @@ function connect($usernameField, $chatField) {
             $chatField.val($chatField.val() + message.body + "\n");
 
             // immer nach unten scrollen
-            $chatField.scrollTop($chatField[0].scrollHeight - $chatField.height());
+            $chatField.animate({ scrollTop: $(document).height() }, "slow");
         });
 
         stompClient.send(topicName,{},$usernameField.val() + " hat den Raum betreten.");
