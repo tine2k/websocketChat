@@ -15,7 +15,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/moon.css" id="theme">
+		<link rel="stylesheet" href="css/theme/beige.css" id="theme">
 
 		<!-- Code syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -57,11 +57,10 @@
 				<section>
 					<h2>Was ist WebSocket?</h2>
 					<ul>
-						<li>Netzwerkprotokoll basierend auf TCP</li>
+						<li>Effizientes Netzwerkprotokoll basierend auf TCP</li>
 						<li>Initiiert über HTTP (im Browser via Javascript)</li>
 						<li>Bidirektionale Verbindung (full-duplex)</li>
 						<li>Teil der HTML5 Initiative</li>
-						<li>guter <a href="http://caniuse.com/#feat=websockets">Browser Support</a></li>
 					</ul>
 				</section>
 				
@@ -69,29 +68,9 @@
 					<h2>Was ist WebSocket <em>NICHT</em> ?</h2>
 					<ul style="text-decoration: line-through">
 						<li>Eine Implementierung</li>
-						<li>Eine Alternative zu HTTP oder REST</li>
+						<li>Ein Ersatz für HTTP oder REST</li>
 						<li>Mobile-Only</li>
-					</ul>
-				</section>
-				
-				<section>
-					<h2>Eigenschaften</h2>
-					<ul>
-						<li>Standardisiert (<a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a>, Dez 2011)</li>
-						<li>Baut auf TCP auf (nicht HTTP)</li>
-						<li>Effizient (6 Bytes Header)</li>
-						<li>Bidirektional</li>
-						<li>Weit verbreitet</li>
-						<li>Gut unterstützt (Brower, Libraries, Webserver, ...)</li>
-					</ul>
-				</section>
-				
-				<section>
-					<h2>Motivation</h2>
-					<ul>
-						<li>Einschränkungen Request+Response von HTTP zu umgehen</li>
-						<li>Ablöse von "Hacks" durch Long-Polling</li>
-						<li>Browser als Clientplatform der Zukunft stärken</li>
+						<li>Nur für Browser</li>
 					</ul>
 				</section>
 				
@@ -100,9 +79,10 @@
 					<ul>
 						<li>Für Server-Push</li>
 						<li>Für Datenübertragung mit niedriger Latenz (Echtzeitkommunikation)</li>
-						<li>Bei Flexibilität beim Design eines Protokolls</li>
+						<li>Flexibilität beim Design eines eigenen Protokolls</li>
 					</ul>
 					<p>&nbsp;</p>
+					<h2>Wer kann das einsetzen?</h2>
 					<p>Browser &harr; Webserver</p>
 					<p>Richclient &harr; Webserver</p>
 				</section>
@@ -118,8 +98,34 @@
 				</section>
 				
 				<section>
+					<h2>Motivation</h2>
+					<ul>
+						<li>Ablöse von Long-Polling "Hacks"</li>
+						<ul>
+							<li>Einschränkungen durch Request+Response von HTTP</li>
+							<li>Ineffiziente HTTP Header</li>
+							<li>Gemeinsame Kommunikation durch nur 1 einzelne Verbindung</li>
+						</ul>
+						<li>Den Browser als Clientplatform der Zukunft stärken</li>
+					</ul>
+				</section>
+				
+				<section>
 					<h2>WebSocket</h2>
 					<img src="http://i.stack.imgur.com/CgDlc.png" />
+				</section>
+				
+				<section>
+					<h2>Eigenschaften</h2>
+					<ul>
+						<li>Standardisiert (<a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a>, <a href="http://www.w3.org/TR/2011/WD-websockets-20110929/">W3C WS API</a>, Ende 2011)</li>
+						<li>Baut auf TCP auf (nicht HTTP)</li>
+						<li>Effizient (6 Bytes Header)</li>
+						<li>Bidirektional</li>
+						<li>URLs in Form von ws:// oder wss://</li>
+						<li>Weit verbreitet</li>
+						<li>Gute Unterstützung (<a href="http://caniuse.com/#feat=websockets">Browser</a>, Libraries, Webserver, ...) </li>
+					</ul>
 				</section>
 				
 				<section>
@@ -148,11 +154,10 @@ Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 				<section>
 				<p>Javascript (Client)</p>
 				<pre><code class="js">
-var ws = new WebSocket('wss://example.com/socket'); // 1
+var ws = new WebSocket('ws://example.com/socket'); // 1
 
 ws.onerror = function (error) { ... } // 2
 ws.onclose = function () { ... } // 3
-
 ws.onopen = function () { // 4
   ws.send("Connection established. Hello server!"); // 5
 }
@@ -190,7 +195,6 @@ ws.onmessage = function(msg) { // 6
 						<li><a href="http://www.html5rocks.com/de/tutorials/websockets/basics/">http://www.html5rocks.com/de/tutorials/websockets/basics/</li>
 						<li><a href="http://www.websocket.org">http://www.websocket.org</li>
 						<li><a href="http://stackoverflow.com/questions/11077857/what-are-long-polling-websockets-server-sent-events-sse-and-comet">Question auf Stackoverflow</li>
-						<li><a href="http://www.html5rocks.com/de/tutorials/websockets/basics/#toc-introduction-lowlatency">http://www.html5rocks.com/de/tutorials/websockets/basics/#toc-introduction-lowlatency</a></li>
 						<li><a href="https://github.com/tine2k/websocketChat">Github</a></li>
 					</ul>
 				</section>
