@@ -1,6 +1,5 @@
 $(function() {
     $("#chatContainer").hide();
-    $('#connectButton')
 });
 
 var myWebSocket;
