@@ -1,3 +1,3 @@
-# websocketChat
+# WebSocket-Chat
 
-Find the presenation at [here](http://tine2k.github.io/websocketChat/#/)
+Find the presenation for this code [here](http://tine2k.github.io/websocketChat/#/)
