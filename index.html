@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>WebSocket</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/moon.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>WebSocket</h1>
+					<h3>Ein bidirektionales Netzwerkprotokoll für das Web</h3>
+				</section>
+
+				<section>
+					<h2>Was ist WebSocket?</h2>
+					<ul>
+						<li>Netzwerkprotokoll basierend auf TCP</li>
+						<li>Initiiert über HTTP (im Browser via Javascript)</li>
+						<li>Bidirektionale Verbindung (full-duplex)</li>
+						<li>Teil der HTML5 Initiative</li>
+						<li>guter <a href="http://caniuse.com/#feat=websockets">Browser Support</a></li>
+					</ul>
+				</section>
+				
+				<section>
+					<h2>Was ist WebSocket <em>NICHT</em> ?</h2>
+					<ul style="text-decoration: line-through">
+						<li>Eine Implementierung</li>
+						<li>Eine Alternative zu HTTP oder REST</li>
+						<li>Mobile-Only</li>
+					</ul>
+				</section>
+				
+				<section>
+					<h2>Eigenschaften</h2>
+					<ul>
+						<li>Standardisiert (<a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a>, Dez 2011)</li>
+						<li>Baut auf TCP auf (nicht HTTP)</li>
+						<li>Effizient (6 Bytes Header)</li>
+						<li>Bidirektional</li>
+						<li>Weit verbreitet</li>
+						<li>Gut unterstützt (Brower, Libraries, Webserver, ...)</li>
+					</ul>
+				</section>
+				
+				<section>
+					<h2>Motivation</h2>
+					<ul>
+						<li>Einschränkungen Request+Response von HTTP zu umgehen</li>
+						<li>Ablöse von "Hacks" durch Long-Polling</li>
+						<li>Browser als Clientplatform der Zukunft stärken</li>
+					</ul>
+				</section>
+				
+				<section>
+					<h2>Wozu braucht man das?</h2>
+					<ul>
+						<li>Für Server-Push</li>
+						<li>Für Datenübertragung mit niedriger Latenz (Echtzeitkommunikation)</li>
+						<li>Bei Flexibilität beim Design eines Protokolls</li>
+					</ul>
+					<p>&nbsp;</p>
+					<p>Browser &harr; Webserver</p>
+					<p>Richclient &harr; Webserver</p>
+				</section>
+				
+				<section>
+					<h2>Polling</h2>
+					<img src="http://i.stack.imgur.com/qlMEU.png" />
+				</section>
+				
+				<section>
+					<h2>Long-Polling</h2>
+					<img src="http://i.stack.imgur.com/zLnOU.png" />
+				</section>
+				
+				<section>
+					<h2>WebSocket</h2>
+					<img src="http://i.stack.imgur.com/CgDlc.png" />
+				</section>
+				
+				<section>
+					<h2>WebSocket Handshake</h2>
+					<img src="https://warmcat.com/websocket-lifecycle.png" />
+				</section>
+				
+				<section>
+					<p>Client &rarr; Server</p>
+					<pre><code class="http">
+GET ws://websocket.example.com/ HTTP/1.1
+Host: websocket.example.com
+Connection: Upgrade
+Upgrade: websocket
+Sec-WebSocket-Key: uRovscZjNol/umbTt5uKmw==
+					</code></pre>
+					<p>Server &rarr; Client</p>
+					<pre><code class="http">
+HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
+					</code></pre>
+				</section>
+				
+				<section>
+				<p>Javascript (Client)</p>
+				<pre><code class="js">
+var ws = new WebSocket('wss://example.com/socket'); // 1
+
+ws.onerror = function (error) { ... } // 2
+ws.onclose = function () { ... } // 3
+
+ws.onopen = function () { // 4
+  ws.send("Connection established. Hello server!"); // 5
+}
+
+ws.onmessage = function(msg) { // 6
+  if(msg.data instanceof Blob) { // 7
+    processBlob(msg.data);
+  } else {
+    processText(msg.data);
+  }
+}
+</code></pre>
+				</section>
+				
+				<section>
+					<h2>Demo</h2>
+					<ul>
+						<li><a href="http://xtcommon4host:6165/osiris/stamm/datenBereichMonitor.xhtml?datenBereich=102479271">Osiris (DEMO-DB)</a></li>
+						<li><a href="http://localhost:8080/">Chat</a></li>
+					</ul>
+				</section>
+				
+				<section>
+					<h2>Referenzen</h2>
+					<ul>
+						<li><a href="http://www.html5rocks.com/de/tutorials/websockets/basics/">http://www.html5rocks.com/de/tutorials/websockets/basics/</li>
+						<li><a href="http://www.websocket.org">http://www.websocket.org</li>
+						<li><a href="http://stackoverflow.com/questions/11077857/what-are-long-polling-websockets-server-sent-events-sse-and-comet">Question auf Stackoverflow</li>
+						<li><a href="http://www.html5rocks.com/de/tutorials/websockets/basics/#toc-introduction-lowlatency">http://www.html5rocks.com/de/tutorials/websockets/basics/#toc-introduction-lowlatency</a></li>
+						<li><a href="https://github.com/tine2k/websocketChat">Github</a></li>
+					</ul>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,56 @@
+function sendMessage(event, $usernameField, $messageField) {
+    if (event.keyCode == 13 && $(messageField).val().length > 0) {
+        myWebSocket.send("[" + $usernameField.val() + "]: " + $messageField.val());
+        $messageField.val('');
+    }
+}
+
+myWebSocket = new WebSocket("ws://localhost:8080/websocket");
+myWebSocket.onmessage = function(evt) {
+	$chatField.val($chatField.val() + evt.data + "\n");
+	$chatField.animate({ scrollTop: $(document).height() }, "slow");
+
+};
+
+myWebSocket.onopen = function(evt) {
+	myWebSocket.send($usernameField.val() + " hat den Raum betreten.");
+};
+	
+@Configuration
+@EnableWebSocket
+public class WebSocketConfig implements WebSocketConfigurer {
+
+    @Override
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+        registry.addHandler(myHandler(), "/websocket");
+    }
+
+    @Bean
+    public WebSocketHandler myHandler() {
+        return new MyHandler();
+    }
+
+}
+	
+	
+public class MyHandler implements WebSocketHandler {
+
+@Override
+public void afterConnectionEstablished(WebSocketSession webSocketSession) throws Exception {
+}
+
+@Override
+public void handleMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage) throws Exception {
+	System.out.println(webSocketMessage.getPayload());
+	webSocketSession.sendMessage(webSocketMessage);
+
+	Timer timer = new Timer();
+	timer.schedule(new TimerTask() {
+		@Override
+		public void run() {
+			try {
+				webSocketSession.sendMessage(new TextMessage("Danke für deine Nachricht!"));
+			} catch (IOException e) { throw new RuntimeException(e); }
+		}
+	}, 1000, 1000);
+}
