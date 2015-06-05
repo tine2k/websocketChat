@@ -12,7 +12,6 @@ public class MyHandler implements WebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession webSocketSession) throws Exception {
-
     }
 
     @Override
