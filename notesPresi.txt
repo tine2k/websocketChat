@@ -26,6 +26,9 @@ Streaming bleibt Verbindung offen mit Transfer Encoding: chunked
 		
 Comet ist Übergriff für Long Polling / Streaming Implementierungen 
 
+Keys = Teil des Handshakes: Sec-WebSocket-Key, Base64 codiert - eine speziellen UUID und schickt die zurück
+Zur Sicherstellung, dass beide Parteien das Websocket Protokoll unterstützten.
+Damit der Server gleich andere GET-Pakete auf diese URL abweisen kann.
 
 WebSocket:
 	Nachteile:
