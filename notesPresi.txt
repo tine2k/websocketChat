@@ -1,0 +1,37 @@
+Netzwerksocket:
+A network socket is an endpoint of an inter-process communication across a computer network. 
+Today, most communication between computers is based on the Internet Protocol; therefore most network sockets are Internet sockets.
+
+Latenz=Verzögerungszeit
+
+Polling:
+	Nachteile:
+		- Ineffizient (viele leere Requests)
+		- Nicht Echtzeit
+		- HTTP Overhead
+	Vorteile:
+		- Server muss nichts können, jeder Browser kanns
+	
+Long-Polling:
+	Nachteile:
+		- Immer 2 Verbindungen
+		- Hack über XMLHttpRequest oder IFrame oder Script-Tag
+		- Unidirektional
+		- Threads konnten früher nicht suspended werden (Servlet 3)
+	Vorteile:
+		- halbwegs Echtzeit
+		
+		
+Streaming bleibt Verbindung offen mit Transfer Encoding: chunked 
+		
+Comet ist Übergriff für Long Polling / Streaming Implementierungen 
+
+
+WebSocket:
+	Nachteile:
+		- Erst Browser ab 2011 könnens
+	Vorteile:
+		- Bidirektional auf 1 Verbindung
+		- Effzient ohne HTTP Header
+		- Binärdaten
+		- Protokolldesign
